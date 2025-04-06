@@ -16,7 +16,7 @@ WORKDIR /rails
 
 # Install base packages
 RUN apt-get update -qq && \
-    apt-get install --no-install-recommends -y curl libjemalloc2 libvips sqlite3 && \
+    apt-get install --no-install-recommends -y curl libjemalloc2 libvips sqlite3 libpq5 && \
     rm -rf /var/lib/apt/lists /var/cache/apt/archives
 
 # Set production environment
@@ -33,6 +33,12 @@ RUN apt-get update -qq && \
     apt-get install --no-install-recommends -y build-essential git libyaml-dev pkg-config && \
     rm -rf /var/lib/apt/lists /var/cache/apt/archives
 
+# This helps with installing postgresql gem (pg)
+RUN apt-get update -qq && apt-get install -y libpq-dev
+
+RUN apt-get update && apt-get install -y postgresql-client
+
+
 # Install application gems
 COPY Gemfile Gemfile.lock ./
 RUN bundle install && \
@@ -41,6 +47,9 @@ RUN bundle install && \
 
 # Copy application code
 COPY . .
+
+# ✅ Ensure entrypoint and startup scripts are executable
+RUN chmod +x bin/*
 
 # Precompile bootsnap code for faster boot times
 RUN bundle exec bootsnap precompile app/ lib/
@@ -58,10 +67,17 @@ FROM base
 COPY --from=build "${BUNDLE_PATH}" "${BUNDLE_PATH}"
 COPY --from=build /rails /rails
 
+# 🔧 Fix permissions for runtime scripts
+RUN chmod +x /rails/bin/*
+
 # Run and own only the runtime files as a non-root user for security
 RUN groupadd --system --gid 1000 rails && \
-    useradd rails --uid 1000 --gid 1000 --create-home --shell /bin/bash && \
-    chown -R rails:rails db log storage tmp
+    useradd rails --uid 1000 --gid 1000 --create-home --shell /bin/bash
+
+# ✅ Make sure the rails user owns all app files and scripts are executable
+RUN chown -R rails:rails /rails && \
+    chmod +x /rails/bin/*
+
 USER 1000:1000
 
 # Entrypoint prepares the database.
