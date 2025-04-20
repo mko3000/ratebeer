@@ -1,6 +1,13 @@
 Rails.application.routes.draw do
-  resources :beers
-  resources :breweries
+  resources :beers, :breweries
+  root 'breweries#index'
+  get 'kaikki_bisset', to: 'beers#index'
+  resources :ratings, only: [:index, :new, :create, :destroy]
+
+  delete "/test/destroy", to: "test#destroy"
+
+
+
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
@@ -13,4 +20,6 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   # root "posts#index"
+
 end
+

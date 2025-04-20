@@ -1,0 +1,83 @@
+ratebeer(dev)> Brewery.new name:"BrewDog", year:2007
+=> #<Brewery:0x00007163fef33e90 id: nil, name: "BrewDog", year: 2007, created_at: nil, updated_at: nil>
+ratebeer(dev)> dog = _
+=> #<Brewery:0x00007163fef33e90 id: nil, name: "BrewDog", year: 2007, created_at: nil, updated_at: nil>
+ratebeer(dev)> dog
+=> #<Brewery:0x00007163fef33e90 id: nil, name: "BrewDog", year: 2007, created_at: nil, updated_at: nil>
+ratebeer(dev)> Beer.new name:"Punk IPA", style:"IPA", brewery:dog
+=> #<Beer:0x00007163febd8840 id: nil, name: "Punk IPA", style: "IPA", brewery_id: nil, created_at: nil, updated_at: nil>
+ratebeer(dev)> Beer.new name:"Nanny State", style:"lowalcohol", brewery:dog
+=> 
+#<Beer:0x00007163febcbb90
+ id: nil,
+ name: "Nanny State",
+ style: "lowalcohol",
+ brewery_id: nil,
+ created_at: nil,
+ updated_at: nil>
+ratebeer(dev)> dog.save
+  TRANSACTION (0.0ms)  BEGIN immediate TRANSACTION /*application='Ratebeer'*/
+  Brewery Create (0.6ms)  INSERT INTO "breweries" ("name", "year", "created_at", "updated_at") VALUES ('BrewDog', 2007, '2025-04-16 20:11:03.949414', '2025-04-16 20:11:03.949414') RETURNING "id" /*application='Ratebeer'*/
+  TRANSACTION (7.0ms)  COMMIT TRANSACTION /*application='Ratebeer'*/
+=> true
+ratebeer(dev)> punk = Beer.new name:"Punk IPA", style:"IPA", brewery:dog
+=> #<Beer:0x00007163febcd0d0 id: nil, name: "Punk IPA", style: "IPA", brewery_id: 5, created_at: nil, updated_at: nil>
+ratebeer(dev)> punk.save
+  TRANSACTION (0.1ms)  BEGIN immediate TRANSACTION /*application='Ratebeer'*/
+  Beer Create (0.3ms)  INSERT INTO "beers" ("name", "style", "brewery_id", "created_at", "updated_at") VALUES ('Punk IPA', 'IPA', 5, '2025-04-16 20:11:55.087403', '2025-04-16 20:11:55.087403') RETURNING "id" /*application='Ratebeer'*/
+  TRANSACTION (0.1ms)  COMMIT TRANSACTION /*application='Ratebeer'*/
+=> true
+ratebeer(dev)> nanny = Beer.new name:"Nanny State", style:"lowalcohol", brewery:dog
+=> 
+#<Beer:0x00007163fec061a0
+...
+ratebeer(dev)> nanny.save
+  TRANSACTION (0.1ms)  BEGIN immediate TRANSACTION /*application='Ratebeer'*/
+  Beer Create (0.6ms)  INSERT INTO "beers" ("name", "style", "brewery_id", "created_at", "updated_at") VALUES ('Nanny State', 'lowalcohol', 5, '2025-04-16 20:12:21.082863', '2025-04-16 20:12:21.082863') RETURNING "id" /*application='Ratebeer'*/
+  TRANSACTION (0.1ms)  COMMIT TRANSACTION /*application='Ratebeer'*/
+=> true
+ratebeer(dev)> Rating.create score:14, beer:nanny
+  TRANSACTION (0.1ms)  BEGIN immediate TRANSACTION /*application='Ratebeer'*/
+  Rating Create (0.7ms)  INSERT INTO "ratings" ("score", "beer_id", "created_at", "updated_at") VALUES (14, 16, '2025-04-16 20:14:06.327339', '2025-04-16 20:14:06.327339') RETURNING "id" /*application='Ratebeer'*/
+  TRANSACTION (0.1ms)  COMMIT TRANSACTION /*application='Ratebeer'*/
+=> 
+#<Rating:0x00007163febf6a48
+ id: 4,
+ score: 14,
+ beer_id: 16,
+ created_at: "2025-04-16 20:14:06.327339000 +0000",
+ updated_at: "2025-04-16 20:14:06.327339000 +0000">
+ratebeer(dev)> Rating.create score:24, beer:nanny
+  TRANSACTION (0.1ms)  BEGIN immediate TRANSACTION /*application='Ratebeer'*/
+  Rating Create (0.6ms)  INSERT INTO "ratings" ("score", "beer_id", "created_at", "updated_at") VALUES (24, 16, '2025-04-16 20:14:16.954258', '2025-04-16 20:14:16.954258') RETURNING "id" /*application='Ratebeer'*/
+  TRANSACTION (0.1ms)  COMMIT TRANSACTION /*application='Ratebeer'*/
+=> 
+#<Rating:0x00007163feaf71d8
+ id: 5,
+ score: 24,
+ beer_id: 16,
+ created_at: "2025-04-16 20:14:16.954258000 +0000",
+ updated_at: "2025-04-16 20:14:16.954258000 +0000">
+ratebeer(dev)> Rating.create score:20, beer:punk
+  TRANSACTION (0.1ms)  BEGIN immediate TRANSACTION /*application='Ratebeer'*/
+  Rating Create (0.3ms)  INSERT INTO "ratings" ("score", "beer_id", "created_at", "updated_at") VALUES (20, 15, '2025-04-16 20:14:26.353539', '2025-04-16 20:14:26.353539') RETURNING "id" /*application='Ratebeer'*/
+  TRANSACTION (0.1ms)  COMMIT TRANSACTION /*application='Ratebeer'*/
+=> 
+#<Rating:0x00007163febff3c8
+ id: 6,
+ score: 20,
+ beer_id: 15,
+ created_at: "2025-04-16 20:14:26.353539000 +0000",
+ updated_at: "2025-04-16 20:14:26.353539000 +0000">
+ratebeer(dev)> Rating.create score:30, beer:punk
+  TRANSACTION (0.1ms)  BEGIN immediate TRANSACTION /*application='Ratebeer'*/
+  Rating Create (0.3ms)  INSERT INTO "ratings" ("score", "beer_id", "created_at", "updated_at") VALUES (30, 15, '2025-04-16 20:14:31.598239', '2025-04-16 20:14:31.598239') RETURNING "id" /*application='Ratebeer'*/
+  TRANSACTION (0.1ms)  COMMIT TRANSACTION /*application='Ratebeer'*/
+=> 
+#<Rating:0x00007163febf2308
+ id: 7,
+ score: 30,
+ beer_id: 15,
+ created_at: "2025-04-16 20:14:31.598239000 +0000",
+ updated_at: "2025-04-16 20:14:31.598239000 +0000">
+ratebeer(dev)> 
