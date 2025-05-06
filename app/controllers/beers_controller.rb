@@ -1,5 +1,5 @@
 class BeersController < ApplicationController
-  before_action :set_beer, only: %i[ show edit update destroy ]
+  before_action :set_beer, only: %i[show edit update destroy]
 
   # GET /beers or /beers.json
   def index
@@ -35,6 +35,7 @@ class BeersController < ApplicationController
         format.html { redirect_to beers_path, notice: "Beer was successfully created." }
         format.json { render :show, status: :created, location: @beer }
       else
+        styles_and_breweries
         format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @beer.errors, status: :unprocessable_entity }
       end
@@ -65,13 +66,14 @@ class BeersController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_beer
-      @beer = Beer.find(params.expect(:id))
-    end
 
-    # Only allow a list of trusted parameters through.
-    def beer_params
-      params.expect(beer: [ :name, :style, :brewery_id ])
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_beer
+    @beer = Beer.find(params.expect(:id))
+  end
+
+  # Only allow a list of trusted parameters through.
+  def beer_params
+    params.expect(beer: [:name, :style, :brewery_id])
+  end
 end

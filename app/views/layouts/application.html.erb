@@ -2,35 +2,49 @@
 
 <html lang="en">
 <head>
-  <title><%#= content_for(:title) || "Ratebeer" %></title>
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="mobile-web-app-capable" content="yes">
-  <%#= csrf_meta_tags %>
-  <%#= csp_meta_tag %>
+    <title><%#= content_for(:title) || "Ratebeer" %></title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta charset="utf-8">
 
-  <%#= yield :head %>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
 
-  <%# Enable PWA manifest for installable apps (make sure to enable in config/routes.rb too!) %>
-  <%#= tag.link rel: "manifest", href: pwa_manifest_path(format: :json) %>
+    <%#= yield :head %>
 
-  <link rel="icon" href="/icon.png" type="image/png">
-  <link rel="icon" href="/icon.svg" type="image/svg+xml">
-  <link rel="apple-touch-icon" href="/icon.png">
+    <%# Enable PWA manifest for installable apps (make sure to enable in config/routes.rb too!) %>
+    <%#= tag.link rel: "manifest", href: pwa_manifest_path(format: :json) %>
 
-  <%# Includes all stylesheet files in app/assets/stylesheets %>
-  <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <link rel="icon" href="/icon.png" type="image/png">
+    <link rel="icon" href="/icon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="/icon.png">
 
-  <%#= javascript_importmap_tags %>
-  <%= javascript_importmap_tags %>
+    <%# Includes all stylesheet files in app/assets/stylesheets %>
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+
+    <%#= javascript_importmap_tags %>
+    <%= javascript_importmap_tags %>
 </head>
 
 <body>
-  <div class="navibar">
-    <%= link_to 'breweries', breweries_path %>
-    <%= link_to 'beers', beers_path %>
-    <%= link_to 'ratings', ratings_path %>
-  </div>
-  <%= yield %>
-</body>
+    <div class="navibar">
+        <%= link_to 'breweries', breweries_path %>
+        <%= link_to 'beers', beers_path %>
+        <%= link_to 'ratings', ratings_path %>
+        <%= link_to 'users', users_path %>
+        <%= link_to 'clubs', beer_clubs_path %>
+        |
+        <% if current_user %>
+            <%= link_to current_user.username, current_user %>
+            <%= link_to 'Rate a new beer', new_rating_path%>
+            <%= link_to 'Join a club', new_membership_path %>
+            <%= link_to 'sign out', signout_path, data: {"turbo-method": :delete}%>
+        <% else %>
+            <%= link_to 'sign up', new_user_path %>
+            <%= link_to 'sign in', new_session_path %>
+        <% end %>
+    </div>
+    <%= yield %>
+
 </html>

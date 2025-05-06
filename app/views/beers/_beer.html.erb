@@ -19,7 +19,7 @@
     <% if beer.ratings.empty? %>
       beer has not yet been rated!
     <% else %>
-      Beer has <%= beer.ratings.count %> <%= "rating".pluralize(beer.ratings.count) %> with an average of: <%= beer.average_rating() %>
+      Beer has <%= beer.ratings.count %> <%= "rating".pluralize(beer.ratings.count) %> with an average of: <%= beer.average_rating().round(2) %>
     <% end %>
   </p>
 

@@ -17,7 +17,7 @@
 </p>
 
 <p>
-  Brewery has <%= brewery.ratings.count %> <%= "rating".pluralize(brewery.ratings.count) %> with an average of: <%= brewery.average_rating() %>
+  Brewery has <%= brewery.ratings.count %> <%= "rating".pluralize(brewery.ratings.count) %> with an average of: <%= brewery.average_rating().round(2) %>
 
 </p>
 
