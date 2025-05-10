@@ -80,6 +80,8 @@ Naming/MethodParameterName:
 Metrics/BlockLength:
   Enabled: true
   Max: 15
+  Exclude:
+    - spec/**/*
 
 Layout/IndentationStyle:
   Enabled: false

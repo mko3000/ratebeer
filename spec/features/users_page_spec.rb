@@ -38,10 +38,10 @@ end
 describe "User page" do
   include Helpers
 
-  let!(:brewery) { FactoryBot.create :brewery, name: "Koff" }
+  let!(:brewery) { FactoryBot.create :brewery, name: "Panimo1" }
   let!(:brewery2) { FactoryBot.create :brewery, name: "Panimo2" }
-  let!(:beer1) { FactoryBot.create :beer, name: "iso 3", brewery: brewery }
-  let!(:beer2) { FactoryBot.create :beer, name: "Karhu", brewery: brewery }
+  let!(:beer1) { FactoryBot.create :beer, name: "Kalja", brewery: brewery }
+  let!(:beer2) { FactoryBot.create :beer, name: "Olunen", brewery: brewery }
   let!(:beer3) { FactoryBot.create :beer, name: "Kiisseli", style: "IPA", brewery: brewery2 }
 
   before :each do
@@ -66,8 +66,8 @@ describe "User page" do
 
     visit user_path(@user)
     expect(page).to have_content 'Has made 2 ratings'
-    expect(page).to have_content 'iso 3 - 15'
-    expect(page).to have_content 'Karhu - 20'
+    expect(page).to have_content 'Kalja - 15'
+    expect(page).to have_content 'Olunen - 20'
     expect(page).to have_content 'average of 17.5'
   end
 
@@ -78,10 +78,10 @@ describe "User page" do
     visit user_path(@user)
     expect(page).to have_content 'Has made 0 ratings'
     expect(page).not_to have_content 'Hevostelija'
-    expect(page).not_to have_content 'iso 3 - 10'
+    expect(page).not_to have_content 'Kalja - 10'
   end
 
-  it "should have a way to delete a for the user that is signed in" do
+  it "should have a way to delete a rating for the user that is signed in" do
     sign_in(username: "Nuuhkija", password: "Foobar1")
     FactoryBot.create(:rating, user: @user, beer: beer1, score: 15)
     FactoryBot.create(:rating, user: @user, beer: beer2, score: 20)
@@ -89,16 +89,16 @@ describe "User page" do
     visit user_path(@user)
 
     expect(page).to have_content 'Has made 2 ratings'
-    expect(page).to have_content 'iso 3 - 15'
-    expect(page).to have_content 'Karhu - 20'
+    expect(page).to have_content 'Kalja - 15'
+    expect(page).to have_content 'Olunen - 20'
 
     expect{
-      click_link(href: '/ratings/1')
+      first('ul li').click_link('Delete')
     }.to change{ Beer.count }.by(0)
 
     expect(page).to have_content 'Rating deleted'
-    expect(page).not_to have_content 'iso 3 - 15'
-    expect(page).to have_content 'Karhu - 20'
+    expect(page).not_to have_content 'Kalja - 15'
+    expect(page).to have_content 'Olunen - 20'
   end
 
   it "should show the favorite style of the user" do
