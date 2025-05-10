@@ -13,7 +13,6 @@ class User < ApplicationRecord
     (?=.*\d)           # must contain a digit
     (?=.*[a-z])        # must contain a lower-case letter
     (?=.*[A-Z])        # must contain an upper-case letter
-    .{8,}              # at least 8 characters long
   \z/x
 
   validates :password, presence: true,
