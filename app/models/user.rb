@@ -10,13 +10,39 @@ class User < ApplicationRecord
   validates :username, uniqueness: true,
                        length: { minimum: 3, maximum: 30 }
   PASSWORD_FORMAT = /\A
-    (?=.*\d)           # Must contain a digit
-    (?=.*[a-z])        # Must contain a lower case character
-    (?=.*[A-Z])        # Must contain an upper case character
-  /x
+    (?=.*\d)           # must contain a digit
+    (?=.*[a-z])        # must contain a lower-case letter
+    (?=.*[A-Z])        # must contain an upper-case letter
+    .{8,}              # at least 8 characters long
+  \z/x
 
   validates :password, presence: true,
                        length: { minimum: 4 },
                        format: { with: PASSWORD_FORMAT },
                        confirmation: true
+
+  def favorite_beer
+    return nil if ratings.empty?
+
+    ratings.order(score: :desc).limit(1).first.beer
+  end
+
+  def favorite_style
+    ratings
+      .joins(:beer)
+      .group("beers.style")
+      .average(:score)
+      .max_by { |_, avg| avg }
+      &.first
+  end
+
+  def favorite_brewery
+    brewery_id = ratings
+                 .joins(:beer)
+                 .group("beers.brewery_id")
+                 .average(:score)
+                 .max_by { |_, avg| avg }
+                 &.first
+    Brewery.find(brewery_id) if brewery_id
+  end
 end

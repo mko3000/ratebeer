@@ -26,7 +26,12 @@ end
 group :test do
   # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
   gem "capybara"
+  gem 'factory_bot_rails'
+  gem 'launchy'
+  gem 'rspec-rails', '~> 6.0.0'
   gem "selenium-webdriver"
+  gem 'simplecov', require: false
+  gem "webdrivers"
 end
 
 # Use the Puma web server [https://github.com/puma/puma]

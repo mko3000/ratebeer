@@ -1,5 +1,6 @@
 class BeersController < ApplicationController
   before_action :set_beer, only: %i[show edit update destroy]
+  before_action :styles_and_breweries, only: [:new, :edit, :create]
 
   # GET /beers or /beers.json
   def index

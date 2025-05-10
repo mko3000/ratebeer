@@ -7,6 +7,17 @@
 <p>
     Has made <%= @user.ratings.count %> <%= "rating".pluralize(@user.ratings.count) %> with an average of  <%= @user.average_rating().round(2) %>
 </p>
+<% if not @user.ratings.empty? %>
+<p>
+    Favorite beer: <%= @user.favorite_beer.name if @user.favorite_beer %>
+</p>
+<p>
+    Favorite style: <%= @user.favorite_style if @user.favorite_style %>
+</p>
+<p>
+    Favorite brewery: <%= @user.favorite_brewery.name if @user.favorite_brewery.name %>
+</p>
+<% end %>
 
 <h3>Ratings:</h3>
 <% if @user.ratings.empty? %>
