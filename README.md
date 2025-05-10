@@ -1,5 +1,7 @@
 # README
 
+[![Maintainability](https://api.codeclimate.com/v1/badges/187e9c225dfb1498218c/maintainability)](https://codeclimate.com/github/mko3000/ratebeer/maintainability)
+
 This README would normally document whatever steps are necessary to get the
 application up and running.
 
