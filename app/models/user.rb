@@ -7,19 +7,22 @@ class User < ApplicationRecord
   has_many :beers, through: :ratings
   has_many :memberships, dependent: :destroy
 
-  validates :username, uniqueness: true,
-                       length: { minimum: 3, maximum: 30 }
+  validates :username,
+            uniqueness: true,
+            length: { minimum: 3, maximum: 30 }
+
   PASSWORD_FORMAT = /\A
     (?=.*\d)           # must contain a digit
     (?=.*[a-z])        # must contain a lower-case letter
     (?=.*[A-Z])        # must contain an upper-case letter
-    .{8,}              # at least 8 characters long
+    .{4,}              # at least 4 characters long
   \z/x
 
-  validates :password, presence: true,
-                       length: { minimum: 4 },
-                       format: { with: PASSWORD_FORMAT },
-                       confirmation: true
+  validates :password,
+            presence: true,
+            format: { with: PASSWORD_FORMAT,
+                      message: "must be ≥4 chars, include at least one lowercase letter, one uppercase letter, and one digit" },
+            confirmation: true
 
   def favorite_beer
     return nil if ratings.empty?
