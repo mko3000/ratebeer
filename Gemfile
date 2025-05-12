@@ -28,7 +28,7 @@ group :test do
   gem "capybara"
   gem 'factory_bot_rails'
   gem 'launchy'
-  gem 'rspec-rails', '~> 6.0.0'
+  gem 'rspec-rails', '~> 8.0.0'
   gem 'rubocop'
   gem "selenium-webdriver"
   gem 'simplecov', require: false
