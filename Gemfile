@@ -33,6 +33,7 @@ group :test do
   gem "selenium-webdriver"
   gem 'simplecov', require: false
   gem "webdrivers"
+  gem "webmock"
 end
 
 # Use the Puma web server [https://github.com/puma/puma]
@@ -78,3 +79,5 @@ gem "litestream", "~> 0.12.0"
 gem 'devise', '~> 4.8', '>= 4.8.1'
 
 gem 'bcrypt', '~> 3.1.7'
+
+gem 'httparty'
