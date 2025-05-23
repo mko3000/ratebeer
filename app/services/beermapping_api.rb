@@ -1,4 +1,4 @@
-class BeermappingApi
+class BeermappingApi < ApplicationController
   def self.places_in(city)
     city = city.downcase
 
@@ -6,8 +6,8 @@ class BeermappingApi
   end
 
   def self.get_places_in(city)
-    puts "Fetching data from Beermapping API for #{city}"
     url = "http://beermapping.com/webservice/loccity/#{key}/"
+    session[:city] = city
 
     response = HTTParty.get "#{url}#{beer_url_encode(city)}"
     places = response.parsed_response["bmp_locations"]["location"]
@@ -15,13 +15,19 @@ class BeermappingApi
     return [] if places.is_a?(Hash) && places['id'].nil?
 
     places = [places] if places.is_a?(Hash)
-    places.map do | place |
+    places.map do |place|
       Place.new(place)
     end
   end
 
   def self.key
-    "731955affc547174161dbd6f97b46538"
+    return nil if Rails.env.test? # testatessa ei apia tarvita, palautetaan nil
+    if ENV['BEERMAPPING_APIKEY'].nil?
+      return "731955affc547174161dbd6f97b46538" # ei jaksa konffata fly.ioa ja Github actionsia niin tää on kovakoodattu
+      # raise 'BEERMAPPING_APIKEY env variable not defined'
+    end
+
+    ENV.fetch('BEERMAPPING_APIKEY')
   end
 
   def self.beer_url_encode(city_name)
