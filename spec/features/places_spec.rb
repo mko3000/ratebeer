@@ -1,6 +1,19 @@
 require 'rails_helper'
 
 describe "Places" do
+  before do
+    allow(BeerweatherApi).to receive(:weather_in) do |city|
+      {
+        city:     city,
+        desc:     "sunny",
+        temp:     "20",
+        wind:     "5",
+        wind_dir: "N",
+        icon:     "https://cdn.worldweatheronline.com/images/wsymbols01_png_64/wsymbol_0004_black_low_cloud.png"
+      }
+    end
+  end
+
   it "if one is returned by the API, it is shown at the page" do
     allow(BeermappingApi).to receive(:places_in).with("kumpula").and_return(
       [

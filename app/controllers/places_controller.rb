@@ -7,6 +7,7 @@ class PlacesController < ApplicationController
       redirect_to places_path, notice: "City cannot be blank."
     else
       session[:city] = params[:city]
+      @weather = BeerweatherApi.weather_in(params[:city])
       @places = BeermappingApi.places_in(params[:city])
       if @places.empty?
         redirect_to places_path, notice: "No locations in #{params[:city]}"

@@ -7,7 +7,6 @@ class BeermappingApi < ApplicationController
 
   def self.get_places_in(city)
     url = "http://beermapping.com/webservice/loccity/#{key}/"
-    session[:city] = city
 
     response = HTTParty.get "#{url}#{beer_url_encode(city)}"
     places = response.parsed_response["bmp_locations"]["location"]
