@@ -1,4 +1,4 @@
-<%= form_with(model: beer_club) do |form| %>
+<%= form_with(model: beer_club, class: "container mt-4") do |form| %>
   <% if beer_club.errors.any? %>
     <div style="color: red">
       <h2><%= pluralize(beer_club.errors.count, "error") %> prohibited this beer_club from being saved:</h2>
@@ -11,22 +11,22 @@
     </div>
   <% end %>
 
-  <div>
-    <%= form.label :name, style: "display: block" %>
-    <%= form.text_field :name %>
+  <div class="form-group">
+    <%= form.label :name, class: "form-label" %>
+    <%= form.text_field :name, class: "form-control" %>
   </div>
 
-  <div>
-    <%= form.label :founded, style: "display: block" %>
-    <%= form.number_field :founded %>
+  <div class="form-group">
+    <%= form.label :founded, class: "form-label" %>
+    <%= form.number_field :founded, class: "form-control" %>
   </div>
 
-  <div>
-    <%= form.label :city, style: "display: block" %>
-    <%= form.text_field :city %>
+  <div class="form-group">
+    <%= form.label :city, class: "form-label" %>
+    <%= form.text_field :city, class: "form-control" %>
   </div>
 
-  <div>
-    <%= form.submit %>
+  <div class="form-group mt-3">
+    <%= form.submit class: "btn btn-primary w-100" %>
   </div>
 <% end %>

@@ -10,7 +10,7 @@
       </ul>
     </div>
   <% end %>
-
+  
   <div>
     <%= form.label :beer_club_id, style: "display: block" %>
     <%= form.select :beer_club_id, options_from_collection_for_select(@beer_clubs, :id, :to_s) %>    

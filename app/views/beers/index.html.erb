@@ -1,18 +1,41 @@
-<p style="color: green"><%= notice %></p>
-
 <% content_for :title, "Beers" %>
 
 <h1>Beers</h1>
 <p>
     Number of beers: <%= @beers.count %>
 </p>
-  <% @beers.each do |beer| %>
-    <%= render beer %>
-  <% end %>
+
+<div class="beers">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Style</th>
+                <th>Brewery</th>
+                <th>Rating</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% @beers.each do |beer| %>
+                <tr id="<%= dom_id beer %>">
+                    <td><%= link_to beer.name, beer %></td>
+                    <td><%= beer.style %></td>
+                    <td><%= link_to beer.brewery.name, beer.brewery %></td>
+                    <td>
+                        <% if beer.ratings.empty? %>
+                            no ratings
+                        <% else %>
+                            <%= beer.average_rating().round(2) %>
+                        <% end %>
+                    </td>
+                </tr>
+            <% end %>
+        </tbody>
+    </table>
 </div>
 
 <p>
-  <%= link_to('New Beer', new_beer_path) if current_user %>
+  <%= link_to('New Beer', new_beer_path, class:'btn btn-primary') if current_user %>
 </p>
 
 <p>

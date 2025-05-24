@@ -81,3 +81,8 @@ gem 'devise', '~> 4.8', '>= 4.8.1'
 gem 'bcrypt', '~> 3.1.7'
 
 gem 'httparty'
+
+# Use the Rails asset pipeline to serve CSS, JavaScript, and images
+gem 'bootstrap', '~> 5.2.0'
+gem 'jquery-rails'
+gem 'mini_racer'
