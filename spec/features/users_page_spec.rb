@@ -92,9 +92,9 @@ describe "User page" do
     expect(page).to have_content 'Kalja - 15'
     expect(page).to have_content 'Olunen - 20'
 
-    expect{
-      first('ul li').click_link('Delete')
-    }.to change{ Beer.count }.by(0)
+    expect {
+      first('ul li', text: 'Delete').click_link('Delete')
+    }.to change { Beer.count }.by(0)
 
     expect(page).to have_content 'Rating deleted'
     expect(page).not_to have_content 'Kalja - 15'
