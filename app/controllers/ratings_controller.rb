@@ -3,6 +3,15 @@ class RatingsController < ApplicationController
 
   def index
     @ratings = Rating.all
+    # binding.pry
+    @recent_ratings = if params[:show_all] == 'true'
+                        Rating.recent
+                      else
+                        Rating.recent.limit(5)
+                      end
+    @best_beers = Beer.best_rated
+    @best_breweries = Brewery.best_rated
+    @top_raters = User.top_raters(5)
   end
 
   def new

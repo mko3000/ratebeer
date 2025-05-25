@@ -9,6 +9,13 @@ class Brewery < ApplicationRecord
                                    greater_than: 1040 }
   validate :year_cannot_be_in_the_future
 
+  scope :active, -> { where active: true }
+  scope :retired, -> { where active: [nil, false] }
+
+  scope :best_rated, -> {
+    Brewery.all.sort_by { |b| -b.average_rating }.take(3)
+  }
+
   private
 
   def year_cannot_be_in_the_future

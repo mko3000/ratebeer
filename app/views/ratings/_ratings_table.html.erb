@@ -1,0 +1,20 @@
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Beer</th>
+      <th>Score</th>
+      <th>User</th>
+      <th>Created At</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @recent_ratings.each do |rating| %>
+      <tr>
+        <td><%= rating.beer %></td>
+        <td><%= rating.score %></td>
+        <td><%= link_to rating.user.username, rating.user %></td>
+        <td><%= rating.created_at.strftime('%Y-%m-%d %H:%M') %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

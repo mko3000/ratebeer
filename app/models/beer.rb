@@ -7,6 +7,10 @@ class Beer < ApplicationRecord
   validates :name, presence: true
   validates :style, presence: true
 
+  scope :best_rated, -> {
+    Beer.all.sort_by { |beer| -beer.average_rating }.take(3)
+  }
+
   def to_s
     "#{name} - #{brewery.name}"
   end

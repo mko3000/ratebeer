@@ -24,6 +24,13 @@ class User < ApplicationRecord
                       message: "must be ≥4 chars, include at least one lowercase letter, one uppercase letter, and one digit" },
             confirmation: true
 
+  scope :top_raters, ->(n) {
+    User.joins(:ratings)
+        .group(:id)
+        .order('COUNT(ratings.id) DESC')
+        .limit(n)
+  }
+
   def favorite_beer
     return nil if ratings.empty?
 
