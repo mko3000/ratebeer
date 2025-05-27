@@ -51,7 +51,6 @@ describe "Ratings page" do
 
   it "should show the rating in the list" do
     visit new_rating_path
-
     select('iso 3 - Koff', from: 'rating[beer_id]')
     fill_in('rating[score]', with: '15')
 
@@ -59,8 +58,12 @@ describe "Ratings page" do
 
     visit ratings_path
 
-    expect(page).to have_content 'List of ratings'
+    expect(page).to have_content 'Top Beers'
+    expect(page).to have_content 'Top Breweries'
+    expect(page).to have_content 'Recent Ratings'
     expect(page).to have_content 'Number of ratings: 1'
-    expect(page).to have_content 'iso 3 15 Nuuhkija'
+    expect(page).to have_content 'iso 3 - Koff'
+    expect(page).to have_content 'Nuuhkija'
+    expect(page).to have_content '15.0'
   end
 end

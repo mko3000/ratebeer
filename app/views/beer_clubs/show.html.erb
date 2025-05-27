@@ -28,8 +28,7 @@
     <% end %>
 
   <div>
-    <%= link_to( "Edit this beer club", edit_beer_club_path(@beer_club) ) %> 
-    <%= button_to( "Destroy this beer club", @beer_club, method: :delete, class:'btn btn-danger' ) %>
+    <%= edit_and_destroy_buttons(@@beer_club) %>
   </div>
 <% end %>
 

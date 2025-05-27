@@ -9,6 +9,8 @@ class BeermappingApi < ApplicationController
     url = "http://beermapping.com/webservice/loccity/#{key}/"
 
     response = HTTParty.get "#{url}#{beer_url_encode(city)}"
+    return nil unless response && response["bmp_locations"]["location"]
+
     places = response.parsed_response["bmp_locations"]["location"]
 
     return [] if places.is_a?(Hash) && places['id'].nil?
@@ -17,6 +19,8 @@ class BeermappingApi < ApplicationController
     places.map do |place|
       Place.new(place)
     end
+  rescue StandardError
+    nil
   end
 
   def self.key

@@ -38,6 +38,8 @@ class User < ApplicationRecord
   end
 
   def favorite_style
+    return nil if ratings.empty?
+
     ratings
       .joins(:beer)
       .group("beers.style")
@@ -47,6 +49,8 @@ class User < ApplicationRecord
   end
 
   def favorite_brewery
+    return nil if ratings.empty?
+
     brewery_id = ratings
                  .joins(:beer)
                  .group("beers.brewery_id")
