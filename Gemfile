@@ -28,7 +28,7 @@ group :test do
   gem 'capybara', '~> 3.39', '>= 3.39.2'
   gem 'factory_bot_rails'
   gem 'launchy'
-  gem 'rspec-rails', '~> 6.0.0'
+  gem 'rspec-rails', '~> 8.0.0'
   gem 'rubocop'
   gem "selenium-webdriver", '>= 4.6'
   gem 'simplecov', require: false
