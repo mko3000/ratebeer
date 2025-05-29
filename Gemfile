@@ -25,12 +25,12 @@ end
 
 group :test do
   # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
-  gem "capybara"
+  gem 'capybara', '~> 3.39', '>= 3.39.2'
   gem 'factory_bot_rails'
   gem 'launchy'
   gem 'rspec-rails', '~> 6.0.0'
   gem 'rubocop'
-  gem "selenium-webdriver"
+  gem "selenium-webdriver", '>= 4.6'
   gem 'simplecov', require: false
   gem "webdrivers"
   gem "webmock"
@@ -86,3 +86,5 @@ gem 'httparty'
 gem 'bootstrap', '~> 5.2.0'
 gem 'jquery-rails'
 gem 'mini_racer'
+
+gem 'rack-mini-profiler'

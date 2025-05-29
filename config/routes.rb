@@ -1,33 +1,33 @@
+# rubocop:disable Metrics/BlockLength
 Rails.application.routes.draw do
+  root 'breweries#index'
+
   resources :memberships
   resources :beer_clubs
   resources :users
-  resources :beers, :breweries
-  resources :places, only: [:index, :show]
-
-  root 'breweries#index'
-  get 'kaikki_bisset', to: 'beers#index'
-  resources :ratings, only: [:index, :new, :create, :destroy]
-  get 'signup', to: 'users#new'
-  resource :session, only: [:new, :create, :destroy]
-  get 'signin', to: 'sessions#new'
-  delete 'signout', to: 'sessions#destroy'
-  post 'places', to: 'places#search'
-
+  resources :beers
   resources :breweries do
     post 'toggle_activity', on: :member
   end
+  resources :places, only: [:index, :show]
+  resources :ratings, only: [:index, :new, :create, :destroy]
 
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
+  resource :session, only: [:new, :create, :destroy]
 
-  # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
-  # Can be used by load balancers and uptime monitors to verify that the app is live.
-  get "up" => "rails/health#show", as: :rails_health_check
+  # Custom routes
+  get    'kaikki_bisset', to: 'beers#index'
+  get    'signup',        to: 'users#new'
+  get    'signin',        to: 'sessions#new'
+  delete 'signout',       to: 'sessions#destroy'
+  post   'places',        to: 'places#search'
+  get    'beerlist',      to: 'beers#list'
+  get    'brewerylist',   to: 'breweries#list'
 
-  # Render dynamic PWA files from app/views/pwa/* (remember to link manifest in application.html.erb)
-  # get "manifest" => "rails/pwa#manifest", as: :pwa_manifest
-  # get "service-worker" => "rails/pwa#service_worker", as: :pwa_service_worker
+  # Health check
+  get 'up', to: 'rails/health#show', as: :rails_health_check
 
-  # Defines the root path route ("/")
-  # root "posts#index"
+  # PWA routes (uncomment if needed)
+  # get 'manifest',        to: 'rails/pwa#manifest',        as: :pwa_manifest
+  # get 'service-worker',  to: 'rails/pwa#service_worker',  as: :pwa_service_worker
 end
+# rubocop:enable Metrics/BlockLength

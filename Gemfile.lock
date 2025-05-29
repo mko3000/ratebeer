@@ -315,6 +315,8 @@ GEM
     raabro (1.4.0)
     racc (1.8.1)
     rack (3.1.14)
+    rack-mini-profiler (3.3.1)
+      rack (>= 1.2.0)
     rack-session (2.1.1)
       base64 (>= 0.1.0)
       rack (>= 3.0.0)
@@ -531,7 +533,7 @@ DEPENDENCIES
   bootsnap
   bootstrap (~> 5.2.0)
   brakeman
-  capybara
+  capybara (~> 3.39, >= 3.39.2)
   debug
   devise (~> 4.8, >= 4.8.1)
   dockerfile-rails (>= 1.7)
@@ -548,11 +550,12 @@ DEPENDENCIES
   propshaft
   pry-byebug
   puma (>= 5.0)
+  rack-mini-profiler
   rails (~> 8.0.2)
   rspec-rails (~> 6.0.0)
   rubocop
   rubocop-rails-omakase
-  selenium-webdriver
+  selenium-webdriver (>= 4.6)
   simplecov
   solid_cable
   solid_cache
