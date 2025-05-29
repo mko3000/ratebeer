@@ -9,9 +9,14 @@
  * Consider organizing styles into separate files for maintainability.
  */
 
-.navibar {
+.navbar {
     padding: 10px;
     background: #EFEFEF;
+}
+
+.edit_and_destroy {
+    padding-top: 10px;
+    padding-bottom: 10px;
 }
 
 @import "bootstrap";

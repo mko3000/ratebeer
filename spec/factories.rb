@@ -8,6 +8,7 @@ FactoryBot.define do
   factory :brewery do
     sequence(:name) { |n| "anonymous#{n}" }
     year { 1900 }
+    active { true }
   end
 
   factory :beer do

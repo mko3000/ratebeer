@@ -1,26 +1,27 @@
 <div id="<%= dom_id beer %>">
-  <p>
-    <strong>Name:</strong>
-    <%= link_to beer.name, beer %>
-  </p>
 
-  <p>
-    <strong>Style:</strong>
-    <%= beer.style %>
-  </p>
+    <% cache @beer do %>
+        <p>
+            <h3><%= link_to beer.name, beer %></h3>            
+        </p>
 
-  <p>
-    <strong>Brewery:</strong>
-    <%= link_to beer.brewery.name, beer.brewery %>
-  </p>
+        <p>
+            <strong>Style:</strong>
+            <%= beer.style %>
+        </p>
 
-  <p>
-    <strong>Ratings:</strong>
-    <% if beer.ratings.empty? %>
-      beer has not yet been rated!
-    <% else %>
-      Beer has <%= beer.ratings.count %> <%= "rating".pluralize(beer.ratings.count) %> with an average of: <%= beer.average_rating().round(2) %>
+        <p>
+            <strong>Brewery:</strong>
+            <%= link_to beer.brewery.name, beer.brewery %>
+        </p>
+
+        <p>
+            <strong>Ratings:</strong>
+            <% if beer.ratings.empty? %>
+            beer has not yet been rated!
+            <% else %>
+            Beer has <%= beer.ratings.count %> <%= "rating".pluralize(beer.ratings.count) %> with an average of: <%= beer.average_rating().round(2) %>
+            <% end %>
+        </p>
     <% end %>
-  </p>
-
 </div>

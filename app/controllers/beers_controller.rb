@@ -3,18 +3,23 @@ class BeersController < ApplicationController
   before_action :styles_and_breweries, only: [:new, :edit, :create]
   before_action :ensure_that_signed_in, except: [:index, :show, :list]
   before_action :ensure_that_admin, only: [:destroy]
+  before_action :expire_beer_list_cache, only: [:create, :update, :destroy]
 
   # GET /beers or /beers.json
   def index
-    @beers = Beer.all
+    @order = params[:order] || 'name' # Make sure this is set correctly
 
-    order = params[:order] || 'name'
+    # Check if the cache exists for the current ordering
+    return if request.format.html? && fragment_exist?("beerlist-#{@order}")
 
-    @beers = case order
-             when "name" then @beers.sort_by(&:name)
+    @beers = Beer.includes(:brewery, :ratings)
+
+    # Sort the beers based on the order, default to 'name' if no valid order
+    @beers = case @order
              when "brewery" then @beers.sort_by { |b| b.brewery.name }
              when "style" then @beers.sort_by(&:style)
              when "rating" then @beers.sort_by(&:average_rating).reverse
+             else @beers.sort_by(&:name) # Default sorting for any other case
              end
   end
 
@@ -74,8 +79,6 @@ class BeersController < ApplicationController
 
   # DELETE /beers/1 or /beers/1.json
   def destroy
-    @beer.destroy!
-
     respond_to do |format|
       format.html { redirect_to beers_path, status: :see_other, notice: "Beer was successfully destroyed." }
       format.json { head :no_content }
@@ -92,5 +95,11 @@ class BeersController < ApplicationController
   # Only allow a list of trusted parameters through.
   def beer_params
     params.expect(beer: [:name, :style, :brewery_id])
+  end
+
+  def expire_beer_list_cache
+    %w(beerlist-name beerlist-brewery beerlist-style beerlist-rating).each do |f|
+      expire_fragment("#{f}-#{@order}")
+    end
   end
 end

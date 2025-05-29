@@ -10,17 +10,20 @@ describe "Breweries page" do
 
   describe "when breweries exists" do
     before :each do
-      # jotta muuttuja näkyisi it-lohkoissa, tulee sen nimen alkaa @-merkillä
+      Rails.cache.clear # tämä lisättiin, koska muuten sivuilla ei näkynyt luotuja panimoita
+      
       @breweries = %w(Koff Karjala Schlenkerla)
       year = 1896
       @breweries.each do |brewery_name|
         FactoryBot.create(:brewery, name: brewery_name, year: year += 1, active: true)
       end
+      puts "Breweries created: #{@breweries.count}"  
 
       visit breweries_path
     end
-
+    
     it "lists the breweries and their total number" do
+      save_and_open_page
       expect(page).to have_content "Number of active breweries: #{@breweries.count}"
       @breweries.each do |brewery_name|
         expect(page).to have_content brewery_name

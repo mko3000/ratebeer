@@ -12,7 +12,7 @@ describe "Beers page" do
     expect(page).to have_content 'Number of beers: 0'
   end
 
-  it "should have an ability to create a new beer with valid beer name if uer signed in" do
+  it "should have an ability to create a new beer with valid beer name if user signed in" do
     sign_in(username: "Nuuhkija", password: "Foobar1")
     visit new_beer_path
 

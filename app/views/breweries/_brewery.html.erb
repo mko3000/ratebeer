@@ -14,11 +14,30 @@
 
 <p>Beers: <%= brewery.beers.count %></p>
 
-<p>
- <% brewery.beers.each do |beer| %>
-   <%= link_to beer.name, beer %>
- <% end %>
-</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Beer Name</th>
+            <th>Style</th>
+            <th>Rating</th>
+        </tr>
+    </thead>
+    <tbody>
+        <% brewery.beers.each do |beer| %>
+            <tr>
+                <td><%= link_to beer.name, beer %></td>
+                <td><%= beer.style %></td>
+                <td>
+                  <% if beer.ratings.any? %>
+                    <%= (beer.ratings.average(:score) || 0).round(2) %>
+                  <% else %>
+                    no ratings
+                  <% end %>
+                </td>
+            </tr>
+        <% end %>
+    </tbody>
+</table>
 
 <p>
   Brewery has <%= brewery.ratings.count %> <%= "rating".pluralize(brewery.ratings.count) %> with an average of: <%= brewery.average_rating().round(2) %>
